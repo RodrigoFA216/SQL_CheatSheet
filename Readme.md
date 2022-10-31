@@ -72,6 +72,151 @@
 | LEFT JOIN | Fusiona el izquierdo con la union del izquiero y derecho | a LEFT JOIN b |
 | RIGHT JOIN | Fusiona el derecho con la union del izquierdo y el derecho | a RIGHT JOIN b |
 | FULL OUTER JOIN | Fusiona ambas, la derecha la izquierda y la union de ambas | a FULL OUTER JOIN b  |
+***
+## Baby steps
+
+Para saber que base de datos estamos usando o cuales son las bases de datos dispponibles dentro de nuestra conexión actual usamos el siguiente comando:
+
+    show databases;
+
+Lo que nos devolverá en el conjunto de resultados un listado de las bases de datos disponibles. Para esta sección usaremos la base de datos Sakila que viene instalada por defecto en la  mayoría de GDB (si no está instalada la puedes descargar desde https://dev.mysql.com/doc/index-other.html). 
+
+Después de eso necesitaremos que el GDB nos muestre las tablas que contiene la base de datos Sakila, Para ello usaremos el siguiente comando:
+
+    show tables from sakila;
+
+El resultado se verá así:
+
+    actor
+    actor_info
+    address
+    category
+    city
+    country
+    customer
+    customer_list
+    film
+    film_actor
+    film_category
+    film_list
+    film_text
+    inventory
+    language
+    nicer_but_slower_film_list
+    payment
+    rental
+    sales_by_film_category
+    sales_by_store
+    staff
+    staff_list
+    store
+
+Una vez sabiendo que tablas contiene la base de datos Sakila podemos empezar a definir algunas cosas sobre el SELECT.
+
+### SELECT
+
+La instrucción SELECT se utiliza para consultar la información de una tabla.
+
+Los datos devueltos se muestran en una tabla, denominada conjunto de resultados.
+
+Sintaxis:
+
+    SELECT column_1, column_2, … FROM tabla_name;
+
+Aquí, columna1, columna2, ... son los nombres de campo de la tabla de la que desea seleccionar datos.
+
+Si desea seleccionar todos los campos disponibles en la tabla, utilice la siguiente sintaxis:
+
+    SELECT * FROM tabla_name;
+
+Por ejemplo, seleccionemos todos los datos de la tabla *actor* dentro de sakila.
+
+    SELECT * FROM actor;
+
+el resultado es muy grande y contiene información de las columnas actor_id, first_name, last_name, last_update.
+
+Ahora seleccionaré solamente las columnas first_name y last_name de la tabla actor:
+
+    SELECT first_name, last_name FROM actor;
+
+El resultado es igual de largo sin embargo solo contiene las dos columnas que elegimos.
+
+### Alias
+
+A la instrucción select se le puede añadir el keyword *as* para especificar que eso que vamos a traer tendrá un alias o un apodo para su futura manipulación.
+
+Seleccionaré la columna first_name como nombre y last_name como apellido:
+
+    SELECT first_name AS nombre, last_name AS apellido FROM actor;
+
+Otra opción es:
+
+    SELECT first_name AS "nombre", last_name AS "apellido" FROM actor;
+
+(Recordemos que como buena práctica de programación debemos conservar el tipo de escritura de las instancias, si estas se encuentran en camelCase se debe continuar con ello, sin embargo si se encuentra en camelCase no se debe cambiar a snake_Case)
+
+### SELECT DISTINCT (en construcción)
+
+SELECT DISTINCT es una declaración que se usa para devolver solo valores distintos (diferentes).
+
+Dentro de una tabla, una columna suele contener muchos valores duplicados; y, a veces, solo desea enumerar los diferentes valores (distintos).
+
+Sintaxis:
+
+    SELECT DISTINCT column_1, column_2 FROM table_name;
+
+Para estos ejercicios usaremos la tabla  y consultaremos postal_code:
+
+    SELECT distinct postal_code FROM address;
+
+### Ejercicios SELECT
+
+1. Ejercicio:  Muestra film_id y title de la tabla film
+
+    SELECT film_id, title FROM film;
+
+2. Ejercicio:  Asigna un Alías a title y escribe 'Titulo de la pelicula' y a description y escribe 'Descripción de la pelicula' de la tabla film
+
+    SELECT title as 'Titulo de la pelicula', description as 'Descripcion de la pelicula' FROM film;
+
+3. Ejercicio: Muestra los campos distintos de postal_code
+
+    SELECT distinct postal_code FROM address;
+
+4. Ejercicio:  Consulta la inicial de la columna country de la tabla country (selecciona solo el primer caracter de la columna de izquierda a derecha con LEFT)
+
+    SELECT LEFT(country,1) FROM country;
+    
+
+5. Ejercicio:  Consulta la tabla country y muestra en mayusculas la columna country
+
+    SELECT UPPER(country) FROM country;
+
+6. Ejercicio:  Consulta la tabla country y muestra cuantos caracteres tienen los campos de la columna country
+
+    SELECT LENGTH(country) FROM country;
+
+- Ejercicio adicional de nivel alto: consulta la tabla country, obten las dos iniciales de la columna country como "capital" la columna country con mayusculas, y el largo de la palabra como "length"
+
+    SELECT LEFT(country, 2) AS "capital", UPPER(country) AS "country", LENGTH(country) AS "length" FROM country;
+
+7. Ejercicio:  Concatena country_id y country de la tabla country (junta ambas columnas y las muestra una seguida de la otra)
+
+    SELECT CONCAT(COUNTRY_ID, country) FROM country;
+
+8. Ejercicio:  Multiplica amount por el 19.84 que es el precio actual del dolar de la tabla payment
+
+    SELECT amount, (amount*19.84) FROM payment;
+
+9. Ejercicio:  Redondea a 0 decimales la columna amount de la tabla payment
+
+    SELECT amount, ROUND(amount,0) FROM payment;
+
+10. Ejercicio: Muestra el valor de PI
+
+    SELECT PI();
+
+
 
 ***
 ## Orden de ejecución de Querys
