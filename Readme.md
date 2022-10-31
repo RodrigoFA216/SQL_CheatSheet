@@ -172,48 +172,48 @@ Para estos ejercicios usaremos la tabla  y consultaremos postal_code:
 ### Ejercicios SELECT
 
 1. Ejercicio:  Muestra film_id y title de la tabla film
-
+    ~~~
     SELECT film_id, title FROM film;
 
 2. Ejercicio:  Asigna un Alías a title y escribe 'Titulo de la pelicula' y a description y escribe 'Descripción de la pelicula' de la tabla film
-
+    ~~~
     SELECT title as 'Titulo de la pelicula', description as 'Descripcion de la pelicula' FROM film;
 
 3. Ejercicio: Muestra los campos distintos de postal_code
-
+    ~~~
     SELECT distinct postal_code FROM address;
 
 4. Ejercicio:  Consulta la inicial de la columna country de la tabla country (selecciona solo el primer caracter de la columna de izquierda a derecha con LEFT)
-
+    ~~~
     SELECT LEFT(country,1) FROM country;
-    
 
 5. Ejercicio:  Consulta la tabla country y muestra en mayusculas la columna country
-
+    ~~~
     SELECT UPPER(country) FROM country;
 
 6. Ejercicio:  Consulta la tabla country y muestra cuantos caracteres tienen los campos de la columna country
-
+    ~~~
     SELECT LENGTH(country) FROM country;
 
-- Ejercicio adicional de nivel alto: consulta la tabla country, obten las dos iniciales de la columna country como "capital" la columna country con mayusculas, y el largo de la palabra como "length"
+* Ejercicio adicional de nivel alto: consulta la tabla country, obten las dos iniciales de la columna country como "capital" la columna country con mayusculas, y el largo de la palabra como "length"
 
+    ~~~
     SELECT LEFT(country, 2) AS "capital", UPPER(country) AS "country", LENGTH(country) AS "length" FROM country;
 
 7. Ejercicio:  Concatena country_id y country de la tabla country (junta ambas columnas y las muestra una seguida de la otra)
-
+    ~~~
     SELECT CONCAT(COUNTRY_ID, country) FROM country;
 
 8. Ejercicio:  Multiplica amount por el 19.84 que es el precio actual del dolar de la tabla payment
-
+    ~~~
     SELECT amount, (amount*19.84) FROM payment;
 
 9. Ejercicio:  Redondea a 0 decimales la columna amount de la tabla payment
-
+    ~~~
     SELECT amount, ROUND(amount,0) FROM payment;
 
 10. Ejercicio: Muestra el valor de PI
-
+    ~~~
     SELECT PI();
 
 
