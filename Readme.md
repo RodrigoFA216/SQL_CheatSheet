@@ -73,6 +73,17 @@
 | RIGHT JOIN | Fusiona el derecho con la union del izquierdo y el derecho | a RIGHT JOIN b |
 | FULL OUTER JOIN | Fusiona ambas, la derecha la izquierda y la union de ambas | a FULL OUTER JOIN b  |
 ***
+# Orden de ejecución de Querys
+<br>
+
+1. FROM
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. ORDER BY
+7. LIMIT
+***
 ## Baby steps
 
 Para saber que base de datos estamos usando o cuales son las bases de datos dispponibles dentro de nuestra conexión actual usamos el siguiente comando:
@@ -155,7 +166,7 @@ Otra opción es:
 
 (Recordemos que como buena práctica de programación debemos conservar el tipo de escritura de las instancias, si estas se encuentran en camelCase se debe continuar con ello, sin embargo si se encuentra en camelCase no se debe cambiar a snake_Case)
 
-### SELECT DISTINCT (en construcción)
+### SELECT DISTINCT 
 
 SELECT DISTINCT es una declaración que se usa para devolver solo valores distintos (diferentes).
 
@@ -177,7 +188,7 @@ Para estos ejercicios usaremos la tabla  y consultaremos postal_code:
 
 2. Ejercicio:  Asigna un Alías a title y escribe 'Titulo de la pelicula' y a description y escribe 'Descripción de la pelicula' de la tabla film
     ~~~
-    SELECT title as 'Titulo de la pelicula', description as 'Descripcion de la pelicula' FROM film;
+    SELECT title as "Titulo de la pelicula", description as "Descripcion de la pelicula" FROM film;
 
 3. Ejercicio: Muestra los campos distintos de postal_code
     ~~~
@@ -215,20 +226,89 @@ Para estos ejercicios usaremos la tabla  y consultaremos postal_code:
 10. Ejercicio: Muestra el valor de PI
     ~~~
     SELECT PI();
-
-
+<br><br>
 
 ***
-## Orden de ejecución de Querys
-<br>
+## Where
 
-1. FROM
-2. WHERE
-3. GROUP BY
-4. HAVING
-5. SELECT
-6. ORDER BY
-7. LIMIT
+WHERE se utiliza para filtrar registros y extraer solo aquellos registros que cumplen una condición específica. Sintaxis:
+
+    SELECT column_1, column_2, … FROM tabla_name WHERE condition
+
+Cuando utilizamos WHERE la búsqueda la podemos realizar con un filtro de tipo carácter o de tipo numérico. Los tipo carácter debemos colocarlos entre comillas y los numéricos no.
+
+Además podemos combinar el filtro where con otros operadores como IN, BETWEEN o LIKE cuya finalidad es realizar búsquedas de patrones. Sin embargo también se pueden usar comparadores lógicos como AND, OR, NOT, XOR y comparadores matemáticos como >, <, <=, >= etc.
+
+Ejemplo: Encontrar el query para que de la tabla film solo muestre la columna title y rental_rate de las películas que su rental_rate sea mayor o igual a 4
+
+    SELECT title, rental_rate FROM film WHERE rental_rate >= 4;
+
+Funciona igual para carácteres o texto.
+
+    SELECT * FROM actor WHERE first_name = "ED";
+
+Para usar más de una condicion podemos usar IN 
+
+    SELECT * FROM country WHERE country IN ("Chile", "France");
+
+Para especificar un rango de cosas a comparar podemos usar BETWEEN 
+
+    SELECT * FROM rental WHERE rental_date BETWEEN '2005-05-01' ADN '2005-06-01';
+
+Para declarar valores específicos en una columna se usa LIKE
+
+    SELECT * FROM actor WHERE first_name LIKE 'j%';
+
+- LIKE 'a%' Valores que empiezen con a.
+- LIKE '%a' Valores que terminen con a.
+- LIKE '%or%' Valores que contengan or en cualquier posicion.
+- LIKE '_r%' Valores que contengan r en la segunda posición.
+- LIKE 'a_%' Valores que empiezen con a y tenga al menos dos carácteres de longitud.
+- LIKE 'a__%' Valores que empiezen con a y tenga al menos tres carácteres de longitud.
+- LIKE 'a%o' Valores que empiezen con a y terminen con o.
+
+### AND OR Y NOT
+
+WHERE se puede combinar con los operadores AND, OR NOT. Los operadores AND y OR se utilizan para filtrar registros en función de más de una condición.
+
+El operador AND muestra un registro si todas las condiciones separadas por AND son VERDADERAS.
+
+    SELECT column_1, column_2, … FROM tabla_name WHERE condition_1 AND condition_2 AND condition_3,…
+
+El operador OR muestra un registro si alguna de las condiciones separadas por OR es VERDADERA.
+
+    SELECT column_1, column_2, … FROM tabla_name WHERE condition_1 OR condition_2 OR condition_3,…
+
+El operador NOT muestra un registro si la(s) condición(es) NO ES VERDADERA.
+
+    SELECT column_1, column_2, … FROM tabla_name WHERE NOT condition
+
+Ejercicios:
+- Muestra los actores cuyo nombre empiece con J y su apellido con C.
+
+    SELECT * FROM actor WHERE first_name LIKE 'J%' AND last_name LIKE 'C%';
+
+- Muestra los actores que su nombre empiece con Z o su apellido con P
+    ~~~
+    SELECT * FROM actor WHERE first_name LIKE 'Z%' OR last_name LIKE 'P%';
+
+- Muestra los registros de country pero que no aparezca Brazil
+    ~~~
+    SELECT * FROM country WHERE NOT country = 'Brazil';
+
+
+## ORDER BY
+
+ORDER BY se utiliza para clasificar el conjunto de resultados en orden ascendente o descendente sin embargo ordena los registros en orden ascendente de forma predeterminada. Para ordenar los registros en orden descendente, se debe colocar DESC
+
+    SELECT column_1, column_2, … FROM tabla_name
+    ORDER BY column_1, column_2, … ASC | DESC
+
+
+
+<br><br>
+
+
 
 # Ejemplos
 ## Lenguaje de definición de datos
