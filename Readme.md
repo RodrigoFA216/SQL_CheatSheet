@@ -433,15 +433,76 @@ const getAllElements = async (req, res, next) => {
 }
 ~~~
 
-![Si ves algo aqui esto está mal](https://github.com/RodrigoFA216/SQL_CheatSheet/blob/main/Transacciones.png)
+![Si ves algo aqui esto está mal](/RodrigoFA216/SQL_CheatSheet/blob/main/Transacciones.jpg?raw=true)
+
 
 ## 5.2 Control de privilegios sobre una base de datos
 
+Hay dos tipos de privilegio que puede otorgar:
+
+Administrador: 
+
+Los privilegios de administrador controlan la creación de objetos y la administración de sistema.
+
+Objeto
+
+Los privilegios de objeto acceder a objetos de base de datos específicos.
+
+Algunos privilegios de administrador son globales en cuanto al alcance, independientemente de la base de datos actual. Por ejemplo, los privilegios de base de datos, usuario, grupo, sistema y administrador de hardware son privilegios globales. Los demás privilegios administrativos pueden ser globales o locales dependiendo de la base de datos actual.
+
+La tabla siguiente describe los privilegios administrativos.
+
+|Privilegio|Descripcion|
+|---|---|
+| Copia seguridad 	|Permite al usuario crear copias de seguridad. El usuario puede ejecutar el comando nzbackup.
+| [Crear] Agregado 	| Permite al usuario crear agregados definidos por el usuario (UDA). El permiso para operar en UDA existentes está controlado por los privilegios de objeto. |
+| [Crear] Base de datos 	| Permite al usuario crear bases de datos. El permiso para operar en bases de datos existentes está controlado por los privilegios de objeto. |
+| [Crear] Tabla externa 	| Permite al usuario crear tablas externas. El permiso para operar en tablas existentes está controlado por los privilegios de objeto. |
+| [Crear] Función 	| Permite al usuario crear funciones definidas por el usuario (UDF). El permiso para operar en UDF existentes está controlado por los privilegios de objeto. |
+| [Crear] Grupo 	| Permite al usuario crear grupos. El permiso para operar en grupos existentes está controlado por los privilegios de objeto. |
+| [Crear] Índice 	| Únicamente para uso del sistema. Los usuarios no pueden crear índices. |
+| [Crear] Biblioteca 	| Permite al usuario crear bibliotecas compartidas. El permiso para operar en bibliotecas compartidas existentes está controlado por los privilegios de objeto. |
+| [Crear] Vista materializada 	| Permite al usuario crear vistas materializadas. |
+| [Crear] Procedimiento 	| Permite al usuario crear procedimientos almacenados. El permiso para operar en procedimientos almacenados está controlado por los privilegios de objeto. |
+| [Crear] Esquema 	| Permite al usuario crear esquemas. El permiso para operar en esquemas existentes está controlado por los privilegios de objeto. |
+| [Crear] Secuencia 	| Permite al usuario crear secuencias de bases de datos. |
+| [Crear] Sinónimo 	| Permite al usuario crear sinónimos. |
+| [Crear] Tabla 	| Permite al usuario crear tablas. El permiso para operar en tablas existentes está controlado por los privilegios de objeto. |
+| [Crear] Tabla temporal 	| Permite al usuario crear tablas temporales. El permiso para operar en tablas existentes está controlado por los privilegios de objeto. |
+| [Crear] Usuario 	| Permite al usuario crear usuarios. El permiso para operar en usuarios existentes está controlado por los privilegios de objeto. |
+| [Crear] Vista 	| Permite al usuario crear vistas. El permiso para operar en vistas existentes está controlado por los privilegios de objeto. |
+| [Gestionar] Hardware 	| Permite al usuario hacer las siguientes operaciones relacionadas con el hardware: ver estado del hardware, gestionar SPU, gestionar topología y duplicación y ejecutar pruebas de diagnóstico. El usuario puede ejecutar estos comandos: nzhw y nzds. |
+| [Gestionar] Seguridad 	| Permite al usuario realizar operaciones de seguridad como la gestión de objetos de seguridad de varios niveles y acciones similares. |
+| [Gestionar] Sistema 	| Permite al usuario hacer las siguientes operaciones de gestión: iniciar/detener/pausar/reanudar el sistema, anular sesiones, ver mapa de distribución, estadísticas de sistema y registros. El usuario puede ejecutar estos comandos: nzsystem, nzstate, nzstats y nzsession. |
+| Restaurar 	| Permite al usuario restaurar el sistema. El usuario puede ejecutar el comando nzrestore. |
+| Sin delimitar 	| Permite al usuario crear o modificar un agregado o función definida por el usuario para que se ejecute en una modalidad sin delimitar. |
+
 ## 5.3 Control de conexiones a un sistema de administración 
+
+Si desea conectar el cliente de administración del sistema a una base de datos remota, primero debe definir una conexión entre el cliente de administración del sistema y la base de datos remota. Si utiliza el cliente de administración del sistema en múltiples sistemas, debe definir conexiones entre cada cliente de administración del sistema y cada base de datos remota.
+
+Un administrador de conexiones ODBC habilita un paquete para conectarse a una serie de sistemas de administración de bases de datos mediante la especificación Conectividad abierta de bases de datos (ODBC).
+
+Cuando agrega una conexión ODBC a un paquete y establece las propiedades de administrador de conexiones, SQL Server Integration Services crea un administrador de conexiones y lo agrega a la colección Connections del paquete. En el tiempo de ejecución el administrador de conexiones se resuelve como una conexión ODBC física.
+
+La propiedad ConnectionManagerType del administrador de conexiones se establece en ODBC.
+
+Puede configurar el administrador de conexiones ODBC de las maneras siguientes:
+
+- Proporcionar una cadena de conexión que haga referencia a un nombre del origen de datos de sistema o usuario.
+
+- Especificar el servidor al que debe conectarse.
+
+- Indicar si la conexión se conserva en tiempo de ejecución.
 
 ## 5.4 Respaldo y restauración de la información
 
-## 5.5 Recopilación de la información
+
+El backup y la recuperación son el proceso de creación y almacenamiento de copias de datos que se pueden utilizar para proteger a las organizaciones contra pérdidas de datos. A esto se le conoce a veces como recuperación operativa. Para recuperar un backup es necesario restaurar los datos en la ubicación original o en una ubicación alternativa, donde se podrán utilizar en lugar de los datos perdidos o dañados.
+
+Una copia de seguridad correcta se almacena en un sistema o medio separado, como una cinta, de los datos primarios para protegerlos contra la posibilidad de pérdida de datos debido a un fallo del hardware o software primario. En casos como Azure y sus servicios la copia de seguridad es gratuita ya que el grupo de recursos divide como es que se manejan los datos en el site donde es ubicado el recurso y se respalda en más de un servidor para garantizar el SLA del producto.
+
+
 
 ## Lenguaje de consulta de datos
 ### UPDATE
