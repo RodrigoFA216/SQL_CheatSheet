@@ -322,37 +322,8 @@ ORDER BY se utiliza para clasificar el conjunto de resultados en orden ascendent
 
 <br><br>
 
-
-## Lenguaje de definición de datos
-
-### CREATE
-
-~~~
-    CREATE DATABASE MiBaseDeDatos;
-
-    CREATE TABLE MiTabla(
-        id int,
-        name varchar(10)
-    );
-
-    CREATE INDEX NombreDelIndex ON NombreDeTabla(Columna);
-~~~
-
-### ALTER
-
-~~~
-    ALTER TABLE MiTabla DROP COLUMN col5;
-
-    ALTER TABLE MiTabla ADD col5 int;
-~~~
-
-### DROP
-
-~~~
-    DROP DATABASE MiBaseDeDatos;
-    DROP TABLE MiTabla;
-~~~
 ## 4.4 Operaciones de conjuntos
+
 
 ## 4.5 Procedimientos almacenados
 Un procedimiento almacenado de SQL Server es un grupo de una o varias instrucciones Transact-SQL o una referencia a un método de Common Runtime Language (CLR) de Microsoft .NET Framework. Los procedimientos se asemejan a las construcciones de otros lenguajes de programación, porque pueden:
