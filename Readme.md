@@ -433,7 +433,7 @@ const getAllElements = async (req, res, next) => {
 }
 ~~~
 
-![Si ves algo aqui esto está mal](/Transacciones.png)
+![Si ves algo aqui esto está mal](https://github.com/RodrigoFA216/SQL_CheatSheet/blob/main/Transacciones.png)
 
 ## 5.2 Control de privilegios sobre una base de datos
 
