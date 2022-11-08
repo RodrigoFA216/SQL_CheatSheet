@@ -84,7 +84,21 @@
 6. ORDER BY
 7. LIMIT
 ***
-## Baby steps
+# Unidad 4
+## 4.1 Lenguaje estándar de consulta
+
+Dentro de los lenguajes de consulta estandarizados existen varias opciones como:
+
+- CODASYL: "Conference on Data Systems Languages"
+- OQL: Lenguaje para consultar objetos dentro de bases de datos orientadas a objetos o a documentos (Mongo DB por ejemplo).
+- SPARQL: es un acrónimo recursivo del inglés SPARQL Protocol and RDF Query Language. Se trata de un lenguaje estandarizado para la consulta de grafos RDF, normalizado por el RDF Data Access Working Group (DAWG) del World Wide Web Consortium (W3C). Se utiliza para desarrollar la web semántica.
+- XQuery: XQuery es un lenguaje de consulta diseñado para colecciones de datos XML. Es semánticamente similar a SQL, aunque incluye algunas capacidades de programación.
+- SQL: SQL (por sus siglas en inglés Structured Query Language; en español lenguaje de consulta estructurada) es un lenguaje de dominio específico, diseñado para administrar, y recuperar información de sistemas de gestión de bases de datos relacionales y es el tema central de este repositorio.
+
+
+## 4.2 y 4.3 lenguaje de consulta de datos y operaciones de selección y proyección.
+
+Por definición: Un lenguaje de consulta es un lenguaje informático usado para hacer consultas en bases de datos y sistemas de información. Los lenguajes de consulta pueden ser clasificados de acuerdo a si son lenguajes de consulta de bases de datos o lenguajes de consulta de recuperación de información.
 
 Para saber que base de datos estamos usando o cuales son las bases de datos dispponibles dentro de nuestra conexión actual usamos el siguiente comando:
 
@@ -309,8 +323,6 @@ ORDER BY se utiliza para clasificar el conjunto de resultados en orden ascendent
 <br><br>
 
 
-
-# Ejemplos
 ## Lenguaje de definición de datos
 
 ### CREATE
@@ -340,8 +352,98 @@ ORDER BY se utiliza para clasificar el conjunto de resultados en orden ascendent
     DROP DATABASE MiBaseDeDatos;
     DROP TABLE MiTabla;
 ~~~
+## 4.4 Operaciones de conjuntos
 
-## Lenguaje de manipulación de datos
+## 4.5 Procedimientos almacenados
+Un procedimiento almacenado de SQL Server es un grupo de una o varias instrucciones Transact-SQL o una referencia a un método de Common Runtime Language (CLR) de Microsoft .NET Framework. Los procedimientos se asemejan a las construcciones de otros lenguajes de programación, porque pueden:
+
+- Aceptar parámetros de entrada y devolver varios valores en forma de parámetros de salida al programa que realiza la llamada.
+
+- Contener instrucciones de programación que realicen operaciones en la base de datos. Entre otras, pueden contener llamadas a otros procedimientos.
+
+- Devolver un valor de estado a un programa que realiza una llamada para indicar si la operación se ha realizado correctamente o se han producido errores, y el motivo de estos.
+
+### Tipos de procedimientos almacenados
+
+Definidos por el usuario
+Un procedimiento definido por el usuario se puede crear en una base de datos definida por el usuario o en todas las bases de datos del sistema excepto en la base de datos Resource . El procedimiento se puede desarrollar en Transact-SQL o como referencia a un método de Common Runtime Language (CLR) de Microsoft .NET Framework.
+
+Temporales
+Los procedimientos temporales son una forma de procedimientos definidos por el usuario. Los procedimientos temporales son iguales que los procedimientos permanentes salvo porque se almacenan en tempdb. Hay dos tipos de procedimientos temporales: locales y globales. Se diferencian entre sí por los nombres, la visibilidad y la disponibilidad. Los procedimientos temporales locales tienen como primer carácter de sus nombres un solo signo de número (#); solo son visibles en la conexión actual del usuario y se eliminan cuando se cierra la conexión. Los procedimientos temporales globales presentan dos signos de número (##) antes del nombre; son visibles para cualquier usuario después de su creación y se eliminan al final de la última sesión en la que se usa el procedimiento.
+
+Sistema
+Los procedimientos del sistema se incluyen con SQL Server. Están almacenados físicamente en la base de datos interna y oculta Resource y se muestran de forma lógica en el esquema sys de cada base de datos definida por el sistema y por el usuario. Además, la base de datos msdb también contiene procedimientos almacenados del sistema en el esquema dbo que se usan para programar alertas y trabajos. Dado que los procedimientos del sistema empiezan con el prefijo sp_ , le recomendamos que no use este prefijo cuando asigne un nombre a los procedimientos definidos por el usuario. Para obtener una lista completa de los procedimientos del sistema, vea Procedimientos almacenados del sistema (Transact-SQL)
+
+SQL Server admite los procedimientos del sistema que proporcionan una interfaz de SQL Server a programas externos para diversas actividades de mantenimiento. Estos procedimientos extendidos usan el prefijo xp_. Para obtener una lista completa de procedimientos extendidos, vea Procedimientos almacenados extendidos generales (Transact-SQL).
+
+Extendidos definidos por el usuario
+Los procedimientos extendidos permiten crear rutinas externas en un lenguaje de programación como C. Estos procedimientos son archivos DLL que una instancia de SQL Server puede cargar y ejecutar dinámicamente.
+
+# Unidad 5 
+## 5.1 Transacciones
+Una transacción es una interacción con una estructura de datos compleja, compuesta por varios procesos que se han de aplicar uno después del otro. La transacción debe realizarse de una sola vez y sin que la estructura a medio manipular pueda ser alcanzada por el resto del sistema hasta que se hayan finalizado todos sus procesos.
+
+Las transacciones deben cumplir cuatro propiedades, denominadas ACID:
+
+1. Atomicidad (Atomicity): es la propiedad que asegura que la operación se ha realizado o no, y por lo tanto ante un fallo del sistema no puede quedar a medias.
+2. Consistencia (Consistency): es la propiedad que asegura que sólo se empieza aquello que se puede acabar. Por lo tanto, se ejecutan aquellas operaciones que no van a romper la reglas y directrices de integridad de la base de datos.
+3. Aislamiento (Isolation): es la propiedad que asegura que una operación no puede afectar a otras. Esto asegura que la realización de dos transacciones sobre la misma información nunca generará ningún tipo de error.
+4. Durabilidad (Durability): es la propiedad que asegura que una vez realizada la operación, ésta persistirá y no se podrá deshacer aunque falle el sistema.
+
+La atomicidad frente a fallos se suele implementar con mecanismos de journaling, y la protección frente a accesos concurrentes mediante bloqueos en las estructuras afectadas. La serialibilidad viene garantizada por la atomicidad. La permanencia se suele implementar forzando a los periféricos encargados de almacenar los cambios a confirmar la completa y definitiva transmisión de los datos al medio (generalmente, el disco). 
+
+La forma algoritmica que suelen tener las transacciones es la siguiente:
+
+~~~
+iniciar transacción (lista de recursos a bloquear)
+ejecución de las operaciones individuales.
+if (todo_ok) {
+  ''aplicar_cambios''
+}
+else {
+  ''cancelar_cambios''
+}
+~~~
+
+En NodeJS se hace de la siguiente forma:
+
+~~~
+const { Router } = require('express'); //express y su dependencia router para manejar direcciones url
+const router = Router();
+
+const {Pool} = require('pg');
+const {db} =require('./config');
+
+const pool = new Pool({
+    user: db.user,
+    password: db.password,
+    host: db.host,
+    port: db.port,
+    database: db.database
+});
+
+const getAllElements = async (req, res, next) => {
+    try {
+        const allElements = await pool.query('SELECT * FROM elementos');
+        console.log(allElements);
+        res.json(allElements.rows);
+    } catch (error) {
+        next(error);
+    }
+}
+~~~
+
+![Si ves algo aqui esto está mal](/Transacciones.png)
+
+## 5.2 Control de privilegios sobre una base de datos
+
+## 5.3 Control de conexiones a un sistema de administración 
+
+## 5.4 Respaldo y restauración de la información
+
+## 5.5 Recopilación de la información
+
+## Lenguaje de consulta de datos
 ### UPDATE
 ~~~
     UPDATE MiTabla SET col1=56 WHERE col2='algo';
@@ -424,3 +526,5 @@ CASE
 END AS NewColumnName
 FROM table;
 ~~~
+
+
